@@ -111,6 +111,9 @@ jobs:
         cd openwrt
         rm -rf feeds/packages/lang/golang
         git clone https://github.com/kenzok8/golang feeds/packages/lang/golang
+        git clone https://github.com/destan19/OpenAppFilter.git package/OpenAppFilter
+        echo "CONFIG_PACKAGE_luci-app-oaf=y" >>.config 
+        git clone https://github.com/vernesong/OpenClash.git package/OpenClash
         cp -f feeds/smpackage/.github/diy/default-settings package/emortal/default-settings/files/99-default-settings
         rm -rf feeds/packages/net/{alist,adguardhome,brook,gost,mosdns,redsocks*,smartdns,trojan*,v2ray*,xray*}
         rm -rf feeds/packages/luci/{luci-app-homeproxy,luci-app-openclash,luci-app-passwall}
