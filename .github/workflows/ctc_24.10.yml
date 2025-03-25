@@ -110,6 +110,7 @@ jobs:
         chmod +x ./customize.sh && ./customize.sh
         cd openwrt
         rm -rf feeds/packages/lang/golang
+        rm -rf /home/runner/runners/2.323.0/_diag/*
         git clone https://github.com/kenzok8/golang feeds/packages/lang/golang
         git clone https://github.com/destan19/OpenAppFilter.git package/OpenAppFilter
         echo "CONFIG_PACKAGE_luci-app-oaf=y" >>.config 
