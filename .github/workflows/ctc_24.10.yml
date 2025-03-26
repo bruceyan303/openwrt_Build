@@ -112,9 +112,6 @@ jobs:
         rm -rf feeds/packages/lang/golang
         rm -rf /home/runner/runners/2.323.0/_diag/*
         git clone https://github.com/kenzok8/golang feeds/packages/lang/golang
-        git clone https://github.com/destan19/OpenAppFilter.git package/OpenAppFilter
-        echo "CONFIG_PACKAGE_luci-app-oaf=y" >>.config 
-        git clone https://github.com/vernesong/OpenClash.git package/OpenClash
         cp -f feeds/smpackage/.github/diy/default-settings package/emortal/default-settings/files/99-default-settings
         rm -rf feeds/packages/net/{alist,adguardhome,brook,gost,mosdns,redsocks*,smartdns,trojan*,v2ray*,xray*}
         rm -rf feeds/packages/luci/{luci-app-homeproxy,luci-app-openclash,luci-app-passwall}
@@ -132,6 +129,20 @@ jobs:
       run: |
         make download -j$(nproc)
         find dl -size -1024c -exec rm -f {} \;
+    - name: add OpenAppFilter
+      run: |
+        git clone https://github.com/destan19/OpenAppFilter.git package/OpenAppFilter
+        echo "CONFIG_PACKAGE_luci-app-oaf=y" >>.config
+    - name: add openclash
+      run: |       
+        mkdir package/luci-app-openclash
+        cd package/luci-app-openclash
+        git init
+        git remote add -f origin https://github.com/vernesong/OpenClash.git
+        git config core.sparsecheckout true
+        echo "luci-app-openclash" >> .git/info/sparse-checkout
+        git pull origin master
+        git branch --set-upstream-to=origin/master master
 
     - name: Cache
       uses: klever1988/cachewrtbuild@main
